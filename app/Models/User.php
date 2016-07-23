@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Traits\UuidTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use UuidTrait;
+    use UuidTrait, SoftDeletes;
     
     /**
      * The attributes that are mass assignable.
@@ -26,4 +27,30 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Boot the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($user) {
+            $user->activation_code = str_random(30);
+        });
+    }
+
+    /**
+     * This mutator automatically hashes the password.
+     *
+     * @var string
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = app('hash')->needsRehash($value)
+            ? bcrypt($value)
+            : $value;
+    }
 }

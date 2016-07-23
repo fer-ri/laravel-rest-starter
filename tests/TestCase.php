@@ -20,6 +20,10 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
+        if (file_exists(__DIR__.'/../.env.testing')) {
+            (new \Dotenv\Dotenv(__DIR__.'/..', '.env.testing'))->load();
+        }
+
         return $app;
     }
 }
