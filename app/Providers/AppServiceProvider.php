@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Dingo\Api\Auth\Provider\JWT;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app) {
+            return new JWT($app['Tymon\JWTAuth\JWTAuth']);
+        });
+
+        app('Dingo\Api\Exception\Handler')->register(function (ModelNotFoundException $e) {
+            throw new NotFoundHttpException('Resource not found!');
+        });
     }
 
     /**

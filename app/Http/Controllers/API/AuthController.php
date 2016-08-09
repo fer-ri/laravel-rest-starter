@@ -9,6 +9,7 @@ use App\Transformers\UserTransformer;
 use App\Http\Requests\RegisterRequest;
 use GuzzleHttp\Exception\RequestException;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Transformers\CurrentUserTransformer;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -186,5 +187,12 @@ class AuthController extends APIController
             default:
                 return $this->response->error('could_not_reset_password', 500);
         }
+    }
+
+    public function me()
+    {
+        $user = $this->auth->user();
+
+        return $this->response->item($user, new CurrentUserTransformer);
     }
 }

@@ -10,4 +10,5 @@ $api->get('auth/refresh-token', 'AuthController@refreshToken');
 
 $api->group(['middleware' => 'jwt.auth'], function ($api) {
     $api->get('auth/validate-token', 'AuthController@validateToken');
+    $api->get('auth/me', 'AuthController@me');
 });
