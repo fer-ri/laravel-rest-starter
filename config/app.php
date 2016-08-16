@@ -151,11 +151,12 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * 3rd Party Service Providers
+         * Package Service Providers...
          */
         Barryvdh\Cors\ServiceProvider::class,
         Dingo\Api\Provider\LaravelServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
 

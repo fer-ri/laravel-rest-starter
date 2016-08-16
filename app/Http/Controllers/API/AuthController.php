@@ -18,7 +18,6 @@ class AuthController extends APIController
 {
     public function login(LoginRequest $request)
     {
-        // grab credentials from the request
         // if we use username, then just change `email` to `username`
         $credentials = $request->only('email', 'password');
 
@@ -84,7 +83,11 @@ class AuthController extends APIController
         try {
             $token = JWTAuth::refresh($currentToken);
 
-            event(new \App\Events\Auth\TokenRefreshed(JWTAuth::toUser($token)));
+            $user = JWTAuth::toUser($token);
+
+            if ($user) {
+                event(new \App\Events\Auth\TokenRefreshed($user));
+            }
 
             return $this->response->array(compact('token'));
         } catch (TokenBlacklistedException $e) {
