@@ -78,7 +78,7 @@ class MailerService
     {
         $this->subject = 'Confirm your email address';
         $this->to = $user->email;
-        $this->view = 'emails.activation';
+        $this->view = 'auth.emails.activation';
         $this->data = compact('user');
 
         $this->send();

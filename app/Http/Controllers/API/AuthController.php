@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Mail\Message;
+use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Requests\LoginRequest;
 use App\Repositories\UserRepository;
 use App\Transformers\UserTransformer;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Facades\Password;
 use GuzzleHttp\Exception\RequestException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Transformers\CurrentUserTransformer;
@@ -106,12 +109,6 @@ class AuthController extends APIController
 
         $user = $userRepository->create($newUser);
 
-        // Mail::send('auth.emails.activate', ['user' => $user], function ($m) use ($user) {
-        //     $m->from(env('MAIL_SENDER'));
-
-        //     $m->to($user->email, $user->name)->subject('Activate your account');
-        // });
-
         event(new \App\Events\Auth\UserRegistered($user));
 
         return $this->response->item($user, new UserTransformer);
@@ -126,7 +123,10 @@ class AuthController extends APIController
         $user = $userRepository->findForActivate($request->get('activation_code'));
 
         if (! $user) {
-            throw new UnauthorizedHttpException($request->get('activation_code'), 'Invalid activation code or user already activated');
+            throw new UnauthorizedHttpException(
+                $request->get('activation_code'),
+                'Invalid activation code or user already activated'
+            );
         }
 
         $user->activated_at = date('Y-m-d H:i:s');

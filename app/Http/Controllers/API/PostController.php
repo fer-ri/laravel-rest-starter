@@ -28,7 +28,7 @@ class PostController extends APIController
     public function store(PostRequest $request)
     {
         $attributes = $request->only(['title', 'content', 'status']);
-        
+
         $attributes['user_id'] = $this->user->id;
 
         $this->postRepository->store($attributes);
