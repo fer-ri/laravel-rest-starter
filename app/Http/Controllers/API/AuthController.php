@@ -192,6 +192,21 @@ class AuthController extends APIController
         }
     }
 
+    public function logout()
+    {
+        try {
+            $token = JWTAuth::getToken();
+
+            JWTAuth::invalidate($token);
+
+            $this->auth->setUser(null);
+
+            return $this->response->noContent();
+        } catch (TokenBlacklistedException $e) {
+            throw new UnauthorizedHttpException(null, $e->getMessage());
+        }
+    }
+
     public function me()
     {
         $user = $this->auth->user();

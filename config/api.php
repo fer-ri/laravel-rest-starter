@@ -168,7 +168,8 @@ return [
     */
 
     'auth' => [
-
+        'jwt' => 'Dingo\Api\Auth\Provider\JWT',
+        'private_token' => 'App\Providers\PrivateTokenProvider',
     ],
 
     /*

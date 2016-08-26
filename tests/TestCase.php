@@ -37,13 +37,15 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         return $app;
     }
 
-    protected function asUser()
+    protected function asUser($data = [])
     {
+        $data = array_merge([
+            'password' => bcrypt('secret'),
+            'activated_at' => new DateTime,
+        ], $data);
+
         return factory(App\Models\User::class)
-            ->create([
-                'password' => bcrypt('secret'),
-                'activated_at' => new DateTime,
-            ]);
+            ->create($data);
     }
 
     /**

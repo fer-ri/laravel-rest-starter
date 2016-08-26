@@ -78,6 +78,51 @@ class AuthTest extends TestCase
         ]);
     }
 
+    public function test_logout()
+    {
+        $this->migrate();
+
+        $user = $this->asUser();
+
+        $headers = $this->headers($user);
+
+        $this->get('/auth/logout', $headers);
+
+        $this->seeStatusCode(204);
+
+        $this->get('/auth/me', $headers);
+
+        $this->seeStatusCode(401);
+    }
+
+    public function test_access_using_private_token()
+    {
+        $this->migrate();
+
+        $user = $this->asUser([
+            'private_token' => str_random(60),
+        ]);
+
+        $this->get('/auth/me?private_token='.$user->private_token);
+
+        $this->seeJsonStructure([
+            'data' => [
+                'uuid', 'name', 'email', 'createdAt'
+            ]
+        ]);
+
+        $this->get('/auth/me', [
+            'Accept' => 'application/json',
+            'PRIVATE-TOKEN' => $user->private_token,
+        ]);
+
+        $this->seeJsonStructure([
+            'data' => [
+                'uuid', 'name', 'email', 'createdAt'
+            ]
+        ]);
+    }
+
     // Wait for bug fix from MailThief when using with PasswordBroker
     // public function test_recovery_and_email_recovery()
     // {

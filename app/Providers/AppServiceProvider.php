@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
-use Dingo\Api\Auth\Provider\JWT;
+use Dingo\Api\Exception\Handler;
 use Illuminate\Support\ServiceProvider;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,12 +18,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app) {
-            return new JWT($app['Tymon\JWTAuth\JWTAuth']);
+        app(Handler::class)->register(function (ModelNotFoundException $e) {
+            throw new NotFoundHttpException('Resource not found!');
         });
 
-        app('Dingo\Api\Exception\Handler')->register(function (ModelNotFoundException $e) {
-            throw new NotFoundHttpException('Resource not found!');
+        app(Handler::class)->register(function (TokenBlacklistedException $e) {
+            throw new UnauthorizedHttpException(null, $e->getMessage());
         });
     }
 
