@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Models\{{ modelName }};
+use League\Fractal\TransformerAbstract;
+
+class DummyClass extends TransformerAbstract
+{
+    public function transform({{ modelName }} ${{ modelInstance }})
+    {
+        return [
+            'uuid' => ${{ modelInstance }}->uuid,
+            // 
+            'createdAt' => ${{ modelInstance }}->created_at->__toString(),
+            'updatedAt' => ${{ modelInstance }}->updated_at->__toString(),
+        ];
+    }
+}

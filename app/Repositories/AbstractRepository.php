@@ -19,6 +19,11 @@ abstract class AbstractRepository extends BaseRepository
         return $model;
     }
 
+    public function findBySlug($slug, $key = 'slug')
+    {
+        return $this->model->where($key, $slug)->firstOrFail();
+    }
+
     public function findByUuid($uuid)
     {
         return $this->model->where('uuid', $uuid)->firstOrFail();

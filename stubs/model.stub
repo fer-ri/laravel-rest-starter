@@ -1,0 +1,12 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Traits\UuidTrait;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class DummyClass extends Model
+{
+    use UuidTrait, SoftDeletes;
+}

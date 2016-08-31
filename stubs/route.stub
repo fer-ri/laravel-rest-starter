@@ -1,0 +1,9 @@
+<?php
+
+$api->group(['middleware' => 'api.auth'], function ($api) {
+    $api->get('/{{ resourceName }}', '{{ controllerName }}@index');
+    $api->post('/{{ resourceName }}', '{{ controllerName }}@store');
+    $api->get('/{{ resourceName }}/{uuid}', '{{ controllerName }}@show');
+    $api->put('/{{ resourceName }}/{uuid}', '{{ controllerName }}@update');
+    $api->delete('/{{ resourceName }}/{uuid}', '{{ controllerName }}@destroy');
+});

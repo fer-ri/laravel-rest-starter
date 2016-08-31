@@ -1,0 +1,88 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Http\Requests\{{ requestName }};
+use App\Repositories\{{ repositoryName }};
+use App\Transformers\{{ transformerName }};
+
+class DummyClass extends APIController
+{
+    protected ${{ repositoryInstance }};
+
+    public function __construct({{ repositoryName }} ${{ repositoryInstance }})
+    {
+        $this->{{ repositoryInstance }} = ${{ repositoryInstance }};
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $items = $this->{{ repositoryInstance }}
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+        return $this->response->paginator($items, new {{ transformerName }});
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\{{ requestName }}  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store({{ requestName }} $request)
+    {
+        $attributes = $request->only([]);
+
+        $this->{{ repositoryInstance }}->store($attributes);
+
+        return $this->response->created();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $uuid
+     * @return \Illuminate\Http\Response
+     */
+    public function show($uuid)
+    {
+        $item = $this->{{ repositoryInstance }}->findByUuid($uuid);
+
+        return $this->response->item($item, new {{ transformerName }});
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\{{ requestName }}  $request
+     * @param  string  $uuid
+     * @return \Illuminate\Http\Response
+     */
+    public function update({{ requestName }} $request, $uuid)
+    {
+        $attributes = $request->only([]);
+
+        $this->{{ repositoryInstance }}->updateByUuid($uuid, $attributes);
+
+        return $this->response->noContent();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string  $uuid
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($uuid)
+    {
+        $this->{{ repositoryInstance }}->destroyByUuid($uuid);
+        
+        return $this->response->noContent();
+    }
+}

@@ -13,7 +13,8 @@
         "dingo/api": "1.0.x@dev",
         "prettus/l5-repository": "^2.6",
         "webpatser/laravel-uuid": "2.*",
-        "cviebrock/eloquent-sluggable": "~4.0@dev"
+        "cviebrock/eloquent-sluggable": "~4.0@dev",
+        "kalnoy/nestedset": "^4.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

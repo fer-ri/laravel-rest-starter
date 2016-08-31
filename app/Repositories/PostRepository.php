@@ -8,9 +8,4 @@ class PostRepository extends AbstractRepository
     {
         return \App\Models\Post::class;
     }
-
-    public function findBySlug($slug)
-    {
-        return $this->model->where('slug', $slug)->firstOrFail();
-    }
 }
