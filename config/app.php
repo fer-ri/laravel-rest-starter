@@ -154,7 +154,6 @@ return [
          * Package Service Providers...
          */
         Barryvdh\Cors\ServiceProvider::class,
-        Barryvdh\HttpCache\ServiceProvider::class,
         Dingo\Api\Provider\LaravelServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,

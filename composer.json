@@ -9,7 +9,6 @@
         "laravel/framework": "5.2.*",
         "laravel/socialite": "^2.0",
         "barryvdh/laravel-cors": "^0.8.0",
-        "barryvdh/laravel-httpcache": "0.2.x@dev",
         "tymon/jwt-auth": "0.5.*",
         "dingo/api": "1.0.x@dev",
         "prettus/l5-repository": "^2.6",
