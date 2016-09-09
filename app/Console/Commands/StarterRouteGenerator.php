@@ -60,7 +60,7 @@ class StarterRouteGenerator extends GeneratorCommand
     {
         $stub = str_replace(
             '{{ resourceName }}',
-            str_slug($this->getBaseName($name)),
+            str_plural(snake_case($this->getBaseName($name), '-')),
             $stub
         );
 
