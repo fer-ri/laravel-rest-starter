@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Repositories\PostRepository;
 use App\Transformers\PostTransformer;
@@ -18,15 +17,19 @@ class PostController extends APIController
 
     public function index()
     {
-        $questions = $this->postRepository
+        $this->authorize('index', $this->postRepository->model());
+
+        $items = $this->postRepository
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return $this->response->paginator($questions, new PostTransformer);
+        return $this->response->paginator($items, new PostTransformer);
     }
 
     public function store(PostRequest $request)
     {
+        $this->authorize('store', $this->postRepository->model());
+
         $attributes = $request->only(['title', 'content', 'status']);
 
         $attributes['user_id'] = $this->user->id;
@@ -38,24 +41,34 @@ class PostController extends APIController
 
     public function show($uuid)
     {
-        $question = $this->postRepository->findByUuid($uuid);
+        $item = $this->postRepository->findByUuid($uuid);
 
-        return $this->response->item($question, new PostTransformer);
+        $this->authorize('show', $item);
+
+        return $this->response->item($item, new PostTransformer);
     }
 
     public function update(PostRequest $request, $uuid)
     {
+        $item = $this->postRepository->findByUuid($uuid);
+
+        $this->authorize('update', $item);
+
         $attributes = $request->only(['title', 'content', 'status']);
 
-        $this->postRepository->updateByUuid($uuid, $attributes);
+        $item->update($attributes);
 
         return $this->response->noContent();
     }
 
     public function destroy($uuid)
     {
-        $this->postRepository->destroyByUuid($uuid);
-        
+        $item = $this->postRepository->findByUuid($uuid);
+
+        $this->authorize('destroy', $item);
+
+        $item->delete();
+
         return $this->response->noContent();
     }
 }

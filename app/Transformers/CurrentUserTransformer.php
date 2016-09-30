@@ -13,8 +13,8 @@ class CurrentUserTransformer extends TransformerAbstract
             'uuid' => $user->uuid,
             'name' => $user->name,
             'email' => $user->email,
-            'roles' => 'admin',
-            'permissions' => [],
+            'role' => $user->role ? $user->role->name : null,
+            'permissions' => $user->getAllPermissions(),
             'createdAt' => $user->created_at->__toString(),
         ];
     }

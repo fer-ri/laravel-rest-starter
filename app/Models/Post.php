@@ -11,6 +11,8 @@ class Post extends Model
 {
     use UuidTrait, Sluggable, SoftDeletes;
 
+    protected $fillable = ['title', 'slug', 'content', 'status'];
+
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -35,5 +37,10 @@ class Post extends Model
                 $model->published_at = new \DateTime;
             }
         });
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

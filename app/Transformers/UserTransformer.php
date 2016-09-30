@@ -14,6 +14,11 @@ class UserTransformer extends TransformerAbstract
             'name' => $user->name,
             'email' => $user->email,
             'createdAt' => $user->created_at->__toString(),
+            'updatedAt' => $user->updated_at->__toString(),
+            '_authorization' => [
+                'update' => gate('update', $user),
+                'destroy' => gate('destroy', $user),
+            ],
         ];
     }
 }

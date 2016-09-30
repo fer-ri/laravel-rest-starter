@@ -11,6 +11,15 @@
 |
 */
 
+$factory->define(App\Models\Role::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->userName,
+        'display_name' => $faker->name,
+        'description' => $faker->text,
+        'permissions' => ['foo' => true, 'bar' => false],
+    ];
+});
+
 $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,

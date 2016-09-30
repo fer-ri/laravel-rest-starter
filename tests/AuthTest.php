@@ -1,9 +1,6 @@
 <?php
 
 use MailThief\Facades\MailThief;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AuthTest extends TestCase
 {
@@ -20,7 +17,7 @@ class AuthTest extends TestCase
 
         $this->post('/auth/login', [
             'email' => $user->email,
-            'password' => 'secret'
+            'password' => 'secret',
         ]);
 
         $this->seeJsonStructure(['token']);
@@ -39,8 +36,8 @@ class AuthTest extends TestCase
 
         $this->seeJsonStructure([
             'data' => [
-                'uuid', 'name', 'email', 'createdAt'
-            ]
+                'uuid', 'name', 'email', 'createdAt',
+            ],
         ]);
 
         // Check that an email was sent to this email address
@@ -73,8 +70,8 @@ class AuthTest extends TestCase
 
         $this->seeJsonStructure([
             'data' => [
-                'uuid', 'name', 'email', 'createdAt'
-            ]
+                'uuid', 'name', 'email', 'createdAt',
+            ],
         ]);
     }
 
@@ -107,8 +104,8 @@ class AuthTest extends TestCase
 
         $this->seeJsonStructure([
             'data' => [
-                'uuid', 'name', 'email', 'createdAt'
-            ]
+                'uuid', 'name', 'email', 'createdAt',
+            ],
         ]);
 
         $this->get('/auth/me', [
@@ -118,8 +115,8 @@ class AuthTest extends TestCase
 
         $this->seeJsonStructure([
             'data' => [
-                'uuid', 'name', 'email', 'createdAt'
-            ]
+                'uuid', 'name', 'email', 'createdAt',
+            ],
         ]);
     }
 

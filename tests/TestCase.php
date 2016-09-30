@@ -44,14 +44,31 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
             'activated_at' => new DateTime,
         ], $data);
 
-        return factory(App\Models\User::class)
+        $user = factory(App\Models\User::class)
             ->create($data);
+
+        // $role = factory(App\Models\Role::class)->create();
+
+        // $user->attachRole($role);
+
+        return $user;
+    }
+
+    protected function asSuperAdmin()
+    {
+        $user = $this->asUser();
+
+        $role = App\Models\Role::create(['name' => 'super-admin']);
+
+        $user->attachRole($role);
+
+        return $user;
     }
 
     /**
      * Return request headers needed to interact with the API.
      *
-     * @return Array array of headers.
+     * @return array array of headers.
      */
     protected function headers($user = null)
     {
@@ -71,5 +88,10 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     protected function migrate()
     {
         Artisan::call('migrate');
+    }
+
+    protected function dumpContent()
+    {
+        dump($this->response->getContent());
     }
 }

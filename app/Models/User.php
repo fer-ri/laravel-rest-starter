@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Traits\UuidTrait;
+use App\Traits\RoleTrait;
+use App\Traits\PermissionTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use UuidTrait, SoftDeletes;
-    
+    use UuidTrait, SoftDeletes, RoleTrait, PermissionTrait;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,7 +38,7 @@ class User extends Authenticatable
     public static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($user) {
             $user->activation_code = str_random(30);
         });

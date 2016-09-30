@@ -8,11 +8,15 @@ class PostTest extends TestCase
 
         $user = $this->asUser();
 
+        $user->setPermission('post:index');
+
+        $user->setPermission('post:update');
+
         $this->get('/posts');
 
         $this->seeStatusCode(401);
 
-        factory(App\Models\Post::class, 3)->create([
+        factory(App\Models\Post::class, 2)->create([
             'user_id' => 1,
         ]);
 
@@ -23,10 +27,19 @@ class PostTest extends TestCase
         $this->seeJsonStructure([
             'data' => [
                 '*' => [
-                    'uuid', 'title', 'slug', 'content', 'status'
-                ]
-            ]
+                    'uuid', 'title', 'slug', 'content', 'status',
+                    '_authorization' => [
+                        'update', 'destroy',
+                    ],
+                ],
+            ],
         ]);
+
+        $json = collect(json_decode($this->response->getContent())->data);
+
+        $this->assertTrue($json->first()->_authorization->update);
+
+        $this->assertFalse($json->first()->_authorization->destroy);
     }
 
     public function test_post_create()
@@ -34,6 +47,8 @@ class PostTest extends TestCase
         $this->migrate();
 
         $user = $this->asUser();
+
+        $user->setPermission('post:store');
 
         $post = factory(App\Models\Post::class)->make()->toArray();
 
@@ -59,6 +74,8 @@ class PostTest extends TestCase
 
         $user = $this->asUser();
 
+        $user->setPermission('post:show');
+
         $post = factory(App\Models\Post::class)->create([
             'user_id' => 1,
         ]);
@@ -75,8 +92,8 @@ class PostTest extends TestCase
 
         $this->seeJsonStructure([
             'data' => [
-                'uuid', 'title', 'slug', 'content', 'status'
-            ]
+                'uuid', 'title', 'slug', 'content', 'status',
+            ],
         ]);
     }
 
@@ -86,14 +103,16 @@ class PostTest extends TestCase
 
         $user = $this->asUser();
 
+        $user->setPermission('post:update');
+
         $post = factory(App\Models\Post::class)->create([
             'user_id' => 1,
         ]);
 
         $title = 'All New Title';
-        
+
         $content = 'All New Content';
-        
+
         $status = 'draft';
 
         $this->put('/posts/'.$post->uuid);
@@ -119,6 +138,8 @@ class PostTest extends TestCase
 
         $user = $this->asUser();
 
+        $user->setPermission('post:destroy');
+
         $post = factory(App\Models\Post::class)->create([
             'user_id' => 1,
         ]);
@@ -137,7 +158,7 @@ class PostTest extends TestCase
 
         $this->notSeeInDatabase('posts', [
             'uuid' => $post->uuid,
-            'deleted_at' => null
+            'deleted_at' => null,
         ]);
     }
 }
