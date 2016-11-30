@@ -120,11 +120,11 @@ class AuthController extends APIController
             'activation_code' => 'required',
         ]);
 
-        $user = $userRepository->findForActivate($request->get('activation_code'));
+        $user = $userRepository->findForActivate($request->activation_code);
 
         if (! $user) {
             throw new UnauthorizedHttpException(
-                $request->get('activation_code'),
+                $request->activation_code,
                 'Invalid activation code or user already activated'
             );
         }

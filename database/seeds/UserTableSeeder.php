@@ -11,12 +11,15 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        App\Models\User::create([
+        $role = App\Models\Role::create(['name' => 'super-admin']);
+
+        $user = App\Models\User::create([
             'name' => 'Administrator',
             'email' => 'admin@mail.com',
             'password' => 'secret',
             'activated_at' => new DateTime,
-            'role' => 'admin',
         ]);
+
+        $user->attachRole($role);
     }
 }
