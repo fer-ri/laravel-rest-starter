@@ -11,9 +11,9 @@ class PermissionTransformer extends TransformerAbstract
     {
         return [
             'uuid' => $permission->uuid,
-            // 
-            'createdAt' => $permission->created_at->__toString(),
-            'updatedAt' => $permission->updated_at->__toString(),
+            //
+            'created_at' => $permission->created_at->__toString(),
+            'updated_at' => $permission->updated_at->__toString(),
         ];
     }
 }

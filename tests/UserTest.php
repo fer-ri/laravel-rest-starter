@@ -79,7 +79,7 @@ class UserTest extends TestCase
         $this->seeJsonStructure([
             'data' => [
                 '*' => [
-                    'uuid', 'name', 'email', 'createdAt', 'updatedAt',
+                    'uuid', 'name', 'email', 'created_at', 'updated_at',
                     '_authorization' => [
                         'update', 'destroy',
                     ],

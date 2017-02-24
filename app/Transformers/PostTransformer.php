@@ -15,8 +15,8 @@ class PostTransformer extends TransformerAbstract
             'slug' => $post->slug,
             'content' => $post->content,
             'status' => $post->status,
-            'createdAt' => $post->created_at->__toString(),
-            'updatedAt' => $post->updated_at->__toString(),
+            'created_at' => $post->created_at->__toString(),
+            'updated_at' => $post->updated_at->__toString(),
             '_authorization' => [
                 'update' => gate('update', $post),
                 'destroy' => gate('destroy', $post),

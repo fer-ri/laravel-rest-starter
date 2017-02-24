@@ -36,7 +36,7 @@ class AuthTest extends TestCase
 
         $this->seeJsonStructure([
             'data' => [
-                'uuid', 'name', 'email', 'createdAt',
+                'uuid', 'name', 'email', 'created_at',
             ],
         ]);
 
@@ -70,7 +70,7 @@ class AuthTest extends TestCase
 
         $this->seeJsonStructure([
             'data' => [
-                'uuid', 'name', 'email', 'createdAt',
+                'uuid', 'name', 'email', 'created_at',
             ],
         ]);
     }
@@ -104,7 +104,7 @@ class AuthTest extends TestCase
 
         $this->seeJsonStructure([
             'data' => [
-                'uuid', 'name', 'email', 'createdAt',
+                'uuid', 'name', 'email', 'created_at',
             ],
         ]);
 
@@ -115,7 +115,7 @@ class AuthTest extends TestCase
 
         $this->seeJsonStructure([
             'data' => [
-                'uuid', 'name', 'email', 'createdAt',
+                'uuid', 'name', 'email', 'created_at',
             ],
         ]);
     }

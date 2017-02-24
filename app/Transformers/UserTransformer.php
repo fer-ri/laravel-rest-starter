@@ -13,8 +13,8 @@ class UserTransformer extends TransformerAbstract
             'uuid' => $user->uuid,
             'name' => $user->name,
             'email' => $user->email,
-            'createdAt' => $user->created_at->__toString(),
-            'updatedAt' => $user->updated_at->__toString(),
+            'created_at' => $user->created_at->__toString(),
+            'updated_at' => $user->updated_at->__toString(),
             '_authorization' => [
                 'update' => gate('update', $user),
                 'destroy' => gate('destroy', $user),

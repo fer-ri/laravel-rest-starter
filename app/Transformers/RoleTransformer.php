@@ -16,8 +16,8 @@ class RoleTransformer extends TransformerAbstract
             'description' => $role->description,
             'permissions' => $role->permissions,
             'level' => (int) $role->level,
-            'createdAt' => $role->created_at->__toString(),
-            'updatedAt' => $role->updated_at->__toString(),
+            'created_at' => $role->created_at->__toString(),
+            'updated_at' => $role->updated_at->__toString(),
             '_authorization' => [
                 'update' => gate('update', $role),
                 'destroy' => gate('destroy', $role),
