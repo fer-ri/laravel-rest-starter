@@ -9,6 +9,9 @@ class AuthorizationTest extends TestCase
         $this->migrate();
     }
 
+    /**
+     * @group authorization
+     */
     public function test_authorization_user_is_super_admin()
     {
         $user = $this->createSuperAdmin();

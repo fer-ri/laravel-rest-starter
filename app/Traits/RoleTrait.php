@@ -77,7 +77,7 @@ trait RoleTrait
      */
     public function hasRole($role)
     {
-        return $this->getRoles()->contains(function ($key, $value) use ($role) {
+        return $this->getRoles()->contains(function ($value, $key) use ($role) {
             return $role == $value->id || str_is($role, $value->name);
         });
     }

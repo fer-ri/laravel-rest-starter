@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'cookie' => 'laravel_session',
+    'cookie' => 'api_rest_starter_session',
 
     /*
     |--------------------------------------------------------------------------

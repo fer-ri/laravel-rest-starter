@@ -5,12 +5,13 @@ namespace App\Models;
 use App\Traits\UuidTrait;
 use App\Traits\RoleTrait;
 use App\Traits\PermissionTrait;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use UuidTrait, SoftDeletes, RoleTrait, PermissionTrait;
+    use UuidTrait, SoftDeletes, RoleTrait, Notifiable, PermissionTrait;
 
     /**
      * The attributes that are mass assignable.

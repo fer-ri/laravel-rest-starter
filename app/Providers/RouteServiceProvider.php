@@ -19,20 +19,17 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param  \Illuminate\Routing\Router  $router
      * @return void
      */
-    public function boot(Router $router)
+    public function boot()
     {
-        //
-
-        parent::boot($router);
+        parent::boot();
     }
 
     /**
      * Define the routes for the application.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param  \Illuminate\Routing\Router $router
      * @return void
      */
     public function map(Router $router)
@@ -46,7 +43,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes all receive session state, CSRF protection, etc.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param  \Illuminate\Routing\Router $router
      * @return void
      */
     protected function mapWebRoutes(Router $router)
@@ -54,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->group([
             'namespace' => $this->namespace, 'middleware' => 'web',
         ], function ($router) {
-            foreach (glob(app_path('Http/Routes/Web').'/*Routes.php') as $file) {
+            foreach (glob(base_path('routes/web').'/*Routes.php') as $file) {
                 require $file;
             }
         });
@@ -69,7 +66,7 @@ class RouteServiceProvider extends ServiceProvider
         $api->version($version, [
             'namespace' => $this->namespace.'\API', 'middleware' => 'api',
         ], function ($api) {
-            foreach (glob(app_path('Http/Routes/API').'/*Routes.php') as $file) {
+            foreach (glob(base_path('routes/api').'/*Routes.php') as $file) {
                 require $file;
             }
         });
