@@ -7,15 +7,29 @@ use League\Fractal\TransformerAbstract;
 
 class CurrentUserTransformer extends TransformerAbstract
 {
+    /**
+     * List of resources to automatically include.
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'roles',
+    ];
+
     public function transform(User $user)
     {
         return [
             'uuid' => $user->uuid,
             'name' => $user->name,
             'email' => $user->email,
-            'role' => $user->role ? $user->role->name : null,
-            'permissions' => $user->getAllPermissions(),
-            'createdAt' => $user->created_at->__toString(),
+            'created_at' => $user->created_at->__toString(),
         ];
+    }
+
+    public function includeRoles(User $user)
+    {
+        $roles = $user->roles;
+
+        return $this->collection($roles, new RoleTransformer);
     }
 }
